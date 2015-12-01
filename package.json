@@ -1,0 +1,26 @@
+{
+  "name": "whereyouat",
+  "version": "1.0.0",
+  "description": "An app for learning firebase",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/mtharrison/whereyouat.git"
+  },
+  "keywords": [
+    "firebase",
+    "learning"
+  ],
+  "author": "Matt Harrison",
+  "license": "BSD-3-Clause",
+  "bugs": {
+    "url": "https://github.com/mtharrison/whereyouat/issues"
+  },
+  "homepage": "https://github.com/mtharrison/whereyouat#readme",
+  "dependencies": {
+    "firebase-tools": "^2.1.0"
+  }
+}
