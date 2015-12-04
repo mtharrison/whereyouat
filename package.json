@@ -4,12 +4,13 @@
   "description": "An app for learning firebase",
   "main": "index.js",
   "scripts": {
-    "build": "browserify public/js/components/*.js public/js/main.js -o public/js/bundle.js -t [ babelify --presets [ es2015 react ] ]",
+    "build": "browserify src/components/*.js src/main.js -o public/bundle.js -t [ babelify --presets [ es2015 react ] ]",
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "firebase deploy",
     "open": "firebase open",
     "push": "firebase deploy && firebase open",
-    "start": "npm run build && firebase serve"
+    "start": "firebase serve",
+    "watch": "watchify -v src/components/*.js src/main.js -o public/bundle.js -t [ babelify --presets [ es2015 react ] ]"
   },
   "repository": {
     "type": "git",
@@ -27,9 +28,12 @@
   "homepage": "https://github.com/mtharrison/whereyouat#readme",
   "dependencies": {
     "firebase": "^2.3.2",
+    "lodash": "^3.10.1",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",
-    "redux": "^3.0.4"
+    "react-redux": "^4.0.0",
+    "redux": "^3.0.4",
+    "redux-thunk": "^1.0.0"
   },
   "devDependencies": {
     "babel-preset-es2015": "^6.1.18",
@@ -37,6 +41,7 @@
     "babelify": "^7.2.0",
     "browserify": "^12.0.1",
     "firebase-tools": "^2.1.0",
-    "reactify": "^1.1.1"
+    "reactify": "^1.1.1",
+    "watchify": "^3.6.1"
   }
 }
