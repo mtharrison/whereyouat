@@ -5,24 +5,35 @@ export default class MapView extends Component {
 
     constructor(props) {
         super(props);
-        this.state = { mapPositionSet: false };
+        this.state = { 
+            mapPositionSet: false,
+            markers: []
+        };
     }
 
-    addMarkers(pins) {
+    addMarkers() {
 
+        // Remove all markers
+
+        this.state.markers.map(m => m.setMap(null));
+        this.state.markers = [];
+
+        // Add markers from pins
+
+        const pins = this.props.pins;
         Object.keys(pins).map((pin) => {
 
-            new google.maps.Marker({
+            this.state.markers.push(new google.maps.Marker({
                 position: new google.maps.LatLng({lat: pins[pin].lat, lng: pins[pin].lng}),
                 map: this.map
-            })
+            }));
         });
     }
 
     componentDidMount() {
 
         this.map = new google.maps.Map(document.getElementById('map'), this.props.mapOptions);
-        this.addMarkers(this.props.pins);
+        this.addMarkers();
         this.map.addListener('rightclick', (e) => {
             this.props.onRightClick({
                 lat: e.latLng.lat(),
@@ -34,12 +45,10 @@ export default class MapView extends Component {
 
         const updateMapPrefs = () => {
 
-            const mapCenter = this.map.getCenter();
-
             const zoom = this.map.getZoom();
             const center = {
-                lat: mapCenter.lat(),
-                lng: mapCenter.lng()
+                lat: this.map.getCenter().lat(),
+                lng: this.map.getCenter().lng()
             };
 
             if (!zoom || !center) return;
@@ -47,19 +56,25 @@ export default class MapView extends Component {
             this.props.updateMapPrefs({ zoom, center });
         }
 
-        this.map.addListener('center_changed', throttle(updateMapPrefs, 1000));
-        this.map.addListener('zoom_changed', throttle(updateMapPrefs, 1000));
+        const throttledCall = throttle(updateMapPrefs.bind(this), 1000);
+
+        this.map.addListener('center_changed', throttledCall);
+        this.map.addListener('zoom_changed', throttledCall);
     }
 
-    componentDidUpdate() {
+    componentDidUpdate(prevProps) {
 
-        this.addMarkers(this.props.pins);
+        console.log('component updating')
 
-        if(!this.state.mapPositionSet && this.props.mapOptions.center && this.props.mapOptions.zoom) {
-            this.map.panTo(new google.maps.LatLng({lat: this.props.mapOptions.center.lat, lng: this.props.mapOptions.center.lng }))
-            this.map.setZoom(this.props.mapOptions.zoom);
-            this.state.mapPositionSet = true;
+        const { center, zoom } = this.props;
+
+        if (center && center !== prevProps.center) {
+            this.map.panTo(new google.maps.LatLng({lat: center.lat, lng: center.lng }));
         }
+        if (zoom && zoom !== prevProps.zoom) {
+            this.map.setZoom(zoom);
+        }
+        this.addMarkers();
     }
 
     render() {

@@ -21,5 +21,10 @@ render(
 
 // Hook up firebase
 
-pinRef.limitToLast(5).on('value', (snapshot) => store.dispatch({ type: 'HYDRATE_PINS', data: snapshot.val()}) );
-userRef.child('matt/preferences/mapOptions').once('value', (snapshot) => store.dispatch({ type: 'MAP_OPTIONS_UPDATE', data: snapshot.val() }));
+pinRef.limitToLast(5).on('value', (snapshot) => {
+    store.dispatch({ type: 'HYDRATE_PINS', data: snapshot.val()}) 
+});
+
+userRef.child('matt/preferences/mapOptions').once('value', (snapshot) => {
+    store.dispatch({ type: 'MAP_OPTIONS_RECEIVE', data: snapshot.val() })
+});
