@@ -4,29 +4,36 @@ import { throttle } from 'lodash';
 export default class MapView extends Component {
 
     constructor(props) {
+
         super(props);
         this.state = { 
-            mapPositionSet: false,
-            markers: []
+            markers: {}
         };
     }
 
     addMarkers() {
 
-        // Remove all markers
-
-        this.state.markers.map(m => m.setMap(null));
-        this.state.markers = [];
-
-        // Add markers from pins
-
         const pins = this.props.pins;
+        const markers = this.state.markers;
+
+        // Remove unwanted markers
+
+        Object.keys(markers).map((marker) => {
+
+            if (!pins[marker]) {
+                markers[marker].setMap(null);
+                delete markers[marker];
+            }
+        });
+        
         Object.keys(pins).map((pin) => {
 
-            this.state.markers.push(new google.maps.Marker({
-                position: new google.maps.LatLng({lat: pins[pin].lat, lng: pins[pin].lng}),
-                map: this.map
-            }));
+            if (!markers[pin]) {
+                markers[pin] = new google.maps.Marker({
+                    position: new google.maps.LatLng({lat: pins[pin].lat, lng: pins[pin].lng}),
+                    map: this.map
+                });
+            }
         });
     }
 
@@ -63,8 +70,6 @@ export default class MapView extends Component {
     }
 
     componentDidUpdate(prevProps) {
-
-        console.log('component updating')
 
         const { center, zoom } = this.props;
 
