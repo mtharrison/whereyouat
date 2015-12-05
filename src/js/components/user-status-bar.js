@@ -8,15 +8,14 @@ export default class UserStatusBar extends Component {
 
         if (authData) {
             return (
-                <div className="col-md-12">
-                    <h3>Hello there {authData.google.displayName}</h3>
-                    <button onClick={logoutAttempt}>Logout</button>
+                <div className="user-status-bar">
+                <button className="btn btn-primary" onClick={logoutAttempt}>Logged in as {authData.google.displayName}. Logout?</button>
                 </div>
             );
         } else {
             return (
-                <div className="col-md-12">
-                    <button onClick={loginAttempt}>Login with Google</button>
+                <div className="user-status-bar">
+                    <button className="btn btn-primary" onClick={loginAttempt}>Login with Google to Pin</button>
                 </div>
             );
         }

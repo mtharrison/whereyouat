@@ -11,7 +11,8 @@ const initialState = {
     pins: {}, 
     mapOptions: {}, 
     auth: { data: null }, 
-    firebase: Firebase.ref 
+    firebase: Firebase.ref,
+    logs: []
 };
 const store = configureStore(initialState);
 

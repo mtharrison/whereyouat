@@ -4,13 +4,17 @@
   "description": "An app for learning firebase",
   "main": "index.js",
   "scripts": {
-    "build": "browserify src/components/*.js src/main.js -o public/bundle.js -t [ babelify --presets [ es2015 react ] ]",
+    "build": "npm run build-css && npm run build-js",
+    "build-css": "lessc src/css/*.less public/style.css",
+    "build-js": "browserify src/js/components/*.js src/js/main.js -o public/bundle.js -t [ babelify --presets [ es2015 react ] ]",
     "test": "echo \"Error: no test specified\" && exit 1",
     "deploy": "firebase deploy",
     "open": "firebase open",
     "push": "firebase deploy && firebase open",
     "start": "firebase serve",
-    "watch": "watchify -v src/components/*.js src/main.js -o public/bundle.js -t [ babelify --presets [ es2015 react ] ]"
+    "watch": "npm run watch-js & npm run watch-css",
+    "watch-css": "catw -c 'lessc -' 'src/css/*.less' -o public/style.css -v",
+    "watch-js": "watchify -v src/js/components/*.js src/js/main.js -o public/bundle.js -t [ babelify --presets [ es2015 react ] ]"
   },
   "repository": {
     "type": "git",
@@ -27,7 +31,9 @@
   },
   "homepage": "https://github.com/mtharrison/whereyouat#readme",
   "dependencies": {
+    "catw": "^1.0.1",
     "firebase": "^2.3.2",
+    "less": "^2.5.3",
     "lodash": "^3.10.1",
     "react": "^0.14.3",
     "react-dom": "^0.14.3",

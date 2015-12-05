@@ -10,7 +10,7 @@ export const ref = new Firebase(BASE_URL);
 
 export function hookupStore(store) {
 
-    ref.child('pins').limitToLast(5).on('value', (snapshot) => {
+    ref.child('pins').on('value', (snapshot) => {
 
         store.dispatch({ type: Actions.HYDRATE_PINS, data: snapshot.val()});
     });

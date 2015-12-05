@@ -45,7 +45,6 @@ export default class MapView extends Component {
             this.props.onRightClick({
                 lat: e.latLng.lat(),
                 lng: e.latLng.lng(),
-                user: 'Test user',
                 desc: 'Just a pin I added'
             });
         });
@@ -86,7 +85,6 @@ export default class MapView extends Component {
 
         return (
             <div className="col-md-8">
-                <h3>The app will remember your last viewed location</h3>
                 <div id="map"></div>
             </div>
         );

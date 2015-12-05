@@ -3,6 +3,7 @@
 export const ADD_PIN = 'ADD_PIN';
 export const HYDRATE_PINS = 'HYDRATE_PINS';
 export const REMOVE_ALL_PINS = 'REMOVE_ALL_PINS';
+export const RECENT_PIN_CLICKED = 'RECENT_PIN_CLICKED';
 
 // User actions
 
@@ -19,11 +20,28 @@ export function addPin(pin) {
 
     return (dispatch, getState) => {
 
+        const { firebase, auth } = getState();
+
+        if (auth.data) {
+            pin.user = auth.data.uid;
+            firebase.child('pins').push(pin);
+
+            dispatch({
+                type: ADD_PIN,
+                data: pin
+            });
+        }
+    };
+}
+
+export function recentPinClicked(pin) {
+
+    return (dispatch, getState) => {
+
         const { firebase } = getState();
-        firebase.child('pins').push(pin);
 
         dispatch({
-            type: ADD_PIN,
+            type: RECENT_PIN_CLICKED,
             data: pin
         });
     };

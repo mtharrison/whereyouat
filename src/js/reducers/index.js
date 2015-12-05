@@ -2,8 +2,6 @@ import * as Actions from '../actions';
 
 export default function reducer (state, action) {
 
-    console.log(state, action.type, action.data);
-
     switch(action.type) {
         case Actions.HYDRATE_PINS:
             return Object.assign({}, state, {
@@ -20,6 +18,16 @@ export default function reducer (state, action) {
         case Actions.AUTH_DATA_RECEIVE:
             return Object.assign({}, state, {
                 auth: { data: action.data }
+            });
+        case Actions.RECENT_PIN_CLICKED:
+            return Object.assign({}, state, {
+                mapOptions: {
+                    center: {
+                        lat: action.data.lat,
+                        lng: action.data.lng
+                    },
+                    zoom: 18
+                }
             });
     }
 

@@ -28,3 +28,5 @@ node_modules
 
 # Browserify bundle
 public/bundle.js
+public/*.css
+public/.style*

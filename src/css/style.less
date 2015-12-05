@@ -1,0 +1,59 @@
+// Mixins
+
+.standard-box-shadow {
+    box-shadow: 0px 0px 7px 1px rgba(0,0,0,0.2);
+}
+
+html, body { 
+    height: 100%; 
+    margin: 0; 
+    padding: 0;
+}
+
+h1 {
+    font-size: 31px;
+}
+
+#map { 
+    height: 500px;
+    .standard-box-shadow;
+}
+
+#header {
+
+    overflow: hidden;
+
+    h1 {
+        float: left;
+    }
+    .user-status-bar {
+        float: right;
+    }
+}
+
+.recent-pins {
+
+    h3 {
+        margin-top: 0;
+    }
+    
+    .recent-pin-item {
+
+        &:hover {
+            cursor: pointer;
+            background: #ccc;
+        }
+    
+        .standard-box-shadow;
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+
+        ul {
+            padding: 0;
+            li {
+                list-style-type: none;
+            }
+        }
+    }
+}
